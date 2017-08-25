@@ -1,0 +1,36 @@
+Simon Ko
+0906762
+CIS3110 A2 
+
+2/27/2017
+
+To run my program, type 'make', then ./simpcpu <-d> <-v> <-r <quantum value>>  > input_file
+'-d' is descriptive mode for each process and thread
+'-v' is verbose mode where each state at clock time is displayed
+'-r quantum value' is round robin mode. If not stated, it is First Come First Serve.
+
+Assumptions:
+For my CPU scheduler, I was not able to switch between threads when a thread is in idle mode. Thus when each
+thread has finished all their cpu time, then the next thread will be chosen.
+
+Algorithm:
+FCFS: It sorts the threads of each process depending on the arrival time. If the arrival time is the same, the thread and process with the lowest number starts first. The thread then completes both I/O and CPU operation before moving to the next thread. The system clock is then advanced to the next thread, and adds thread switching time. If the next thread is in a different process, the clock is advanced the thread and process switching times.
+RR: It sorts the threads of each process depending on the arrival time. If the CPU operation is completed before the quantum value, the thread is terminated and the system clock moves to the next thread. If the CPU operation is not completed before the quantum value, the current thread is then blocked, and the new thread begins. The remaining CPU time is left on the current thread, and operated on when it is next in turn.
+
+
+i) Does your simulator include switch overhead for the first ready state to running state transition? Explain
+
+No there is no switch overhead from ready to running, because I assume it starts with no ready running threads at the beginning of the simulation.
+
+ii) Does your simulator include switch overhead if a thread moves from ready state to running state and the CPU is idle? Explain
+
+Yes there is a switch overhead from ready to running because only when the CPU is idle is when it switches.
+
+iii) Does your simulator include switch overhead if a thread moves from running state to blocked state and the ready queue is empty? Explain
+
+No because there is no ready queue in this simulator.
+
+iv) Does your simulation include switch overhead if a thread is interrupted (due to time slice) and either the ready queue is empty or the thread has the highest priority? Explain
+
+No there is not a switch overhead if a thread is interrupted, because it needs to switch to another thread.
+

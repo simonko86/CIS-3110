@@ -1,0 +1,74 @@
+Simon Ko
+Assigment 1: Writing a shell
+CIS3110
+Completed: 1/27/2017
+Due: 1/30/2017
+
+
+Program Description and Algorithm:
+
+In my shell program, I have an if else statement that checks the input of the string argument.  This check determines firstly if there is an input, or if the first argument is exit, args, add, or my custom argument input (zeros).   If the first argument is not any of these, it checks to see if there is only one argument by seeing if the second argument input is NULL.  If there is more than one argument, there is another check that loops through the rest of the elements if there is a “>”, “<” or “&” as the last argument.  If any of those appear, the shell operates.
+
+The first check is to see if there is an argument, or if the first element of the argument input is exit, args, add or my custom argument input (zero). 
+Exit, exits the shell. eg: Input: exit, and shell quits
+Args counts the number of arguments but ignores any text in quotes. eg Input: args 1 2 3 4 5 "six seven", and outputs: argc = 6, args 1,2,3,4,5,six,seven
+Zero counts the number in the next argument, and prints the number of zero's. eg Input: zero 3 and outputs: 0 0 0
+
+If these don't match, it checks for '&' at the end of the command line.  This executes the command in the child background, and then returns back to the parent.  To show this, I display the child PID value, execute the command, return to the parent, and display that PID value.
+eg Input: ls &, and outputs:
+Executing in child: 22349
+lex.c	  lex.yy.o  msh		my_shell.o  Readme.txt~ lex.yy.c  Makefile  my_shell.c	Readme.txt
+Back to main: 22337
+
+
+If there is no '&', my shell checks for '>' or '<', where '>' writes to the file in the argument after '>', while '<' reads from the file in the argument after. eg: Input: ls -a > foo and outputs: To a text file labelled foo:
+.
+..
+foo
+lex.c
+lex.yy.c
+lex.yy.o
+Makefile
+msh
+my_shell.c
+my_shell.o
+Readme.txt
+Readme.txt~
+Input: sort < foo, and outputs: 
+
+.
+..
+foo
+lex.c
+lex.yy.c
+lex.yy.o
+Makefile
+msh
+my_shell.c
+my_shell.o
+Readme.txt
+Readme.txt~
+
+
+If there is neither '<' or '>', and there are more than 1 arguments, then the shell just executes as normal.
+eg: Input: ls -l, and outputs:
+total 168
+-rw-rw-r-- 1 simon simon    91 Jan 27 10:12 foo
+-rw-r--r-- 1 simon simon   402 Feb 20  2014 lex.c
+-rw-rw-r-- 1 simon simon 44766 Jan 16 13:35 lex.yy.c
+-rw-rw-r-- 1 simon simon 41336 Jan 16 13:35 lex.yy.o
+-rw-r--r-- 1 simon simon   256 Jan 13 12:47 Makefile
+-rwxrwxr-x 1 simon simon 39896 Jan 27 10:11 msh
+-rw-r--r-- 1 simon simon  4731 Jan 27 09:48 my_shell.c
+-rw-rw-r-- 1 simon simon 11984 Jan 27 10:11 my_shell.o
+-rw-rw-r-- 1 simon simon  2216 Jan 27 10:11 Readme.txt
+-rw-rw-r-- 1 simon simon   900 Jan 27 10:01 Readme.txt~
+
+Assumptions:
+
+I assumed that if there is redirection, it will only be to or from a file, it will not be both.  I am also assuming that when the add argument is input, any non-digit or non-hex number will not be included into the addition.
+
+Run:
+
+To run this program, type make in the terminal window.  ./msh runs the file
+
